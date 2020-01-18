@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+//Testing to see if Max can push
 using namespace std;
 int evaluate(map<int, int> a, double x);
 map<int, int> differentiate(map<int, int> a){
@@ -56,8 +57,7 @@ int main(){
 		cout << itr -> first << endl;
 		cout << itr -> second << endl;
 	}
-	cout << lowerBound(first) << endl;
-	cout << upperBound(first) << endl;
+
 	return 0;
 
 
