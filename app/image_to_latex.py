@@ -14,7 +14,7 @@ app_key = os.getenv('APP_KEY')
 endpoint = "https://api.mathpix.com/v3/latex"
 
 
-def image_to_latex(file_path):
+def to_wolfram(file_path):
 
     image_uri = "data:image/jpg;base64," + base64.b64encode(open(file_path, "rb").read()).decode()
 
@@ -36,6 +36,6 @@ def image_to_latex(file_path):
 
 # test
 if __name__ == "__main__":
-    file_path = '/home/cindyli/Pictures/polynomials.png'
-    equation = image_to_latex(file_path = os.path.abspath(file_path))
+    file_path = '/home/cindyli/Pictures/handwritten-note.jpg'
+    equation = to_wolfram(file_path = os.path.abspath(file_path))
     print(equation.replace(' ', ''))
