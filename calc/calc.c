@@ -10,7 +10,20 @@ map<int, int> differentiate(map<int, int> a){
 		deriv.insert(pair<int, int>((itr->first)-1,(itr->first)*(itr->second)));
 	}
 	return deriv;
-
+}
+int lowerBound(map<int, int> a){
+	int test = -10;
+	while (evaluate(a, test) *evaluate(differentiate(a), test) < 0){
+		test = test * 10;
+	}
+	return test;
+}
+int upperBound(map<int, int> a){
+	int test = 10;
+	while (evaluate(a, test) * evaluate(differentiate(a), test) < 0){
+		test = test * 10;
+	}
+	return test;
 }
 int power(int a, int b){
 	if (b == 0) return 1;
@@ -38,7 +51,8 @@ int main(){
 		cout << itr -> first << endl;
 		cout << itr -> second << endl;
 	}
-	//cout << deriv.begin()->first << endl;
+	cout << lowerBound(first) << endl;
+	cout << upperBound(first) << endl;
 	return 0;
 
 
