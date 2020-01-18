@@ -8,24 +8,22 @@ import $ from "jquery";
 function App() {
    function uploadFile(){
       var input = document.getElementById("imgInp").files;
-      
-      var fileReader = new FileReader();
-
       var fileToLoad = input[0];
+      
+      alert(fileToLoad);
+      
+      var reader = new FileReader();
+      reader.readAsBinaryString(fileToLoad);
+      
+      reader.onload = function() {
+        alert(btoa(reader.result));
 
-      fileReader.onload = function(fileLoadedEvent){
-         var srcData = fileLoadedEvent.target.result;
 
-         var newImage = document.createElement("img");
-         newImage.src = srcData;
+       };
+       reader.onerror = function() {
+        alert('there are some problems');
+       };      
 
-         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
-   
-
-         alert(document.getElementById("ImgTest").innerHTML);
-      }
-
-      //alert(JSON.stringify(input));   
    }
 
    var loadFile = function(event) {
@@ -51,6 +49,9 @@ function App() {
       
       <button className="button" onClick={uploadFile}>submit</button>
    </div>
+
+
+   <div id="imgTest"></div>
 
    </Container>
   );
