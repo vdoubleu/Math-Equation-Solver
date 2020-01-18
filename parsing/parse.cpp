@@ -1,0 +1,221 @@
+#include <vector>
+#include <string>
+#include <map>
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+string reverseString(string s)
+{
+    int len = s.length();
+    string t = "";
+    for (int i = len - 1; i >= 0; --i)
+    {
+        t += s.at(i);
+    }
+    return t;
+}
+
+map<int, int> makeMap(vector<int> pow, vector<int> co)
+{
+    int len = pow.size();
+    map<int, int> poly;
+    if (len != co.size())
+    {
+        cerr << "Sizes of vectors pow and co are different, pow: " << pow.size() << ", co: " << co.size() << endl;
+    }
+    for (int i = 0; i < len; ++i)
+    {
+        int p = pow.at(i);
+        int c = co.at(i);
+        if(poly.find(p) != poly.end()){
+            poly[p] += c;
+        }else{
+            poly[p] = c;
+        }
+    }
+    return poly;
+}
+string cleanString(string s)
+{
+    int len = s.length();
+    for (int i = 0; i < len; ++i)
+    {
+        char c = s.at(i);
+        int diff = c - '0';
+        if (c != 'x' && c != '^' && c != '+' && c != '-' && (diff < 0 || diff > 9))
+        {
+            s.replace(i, 1, "");
+            // cout << "i: " << i << endl;
+            --i;
+            --len;
+            // cout << s << endl;
+        }
+    }
+    cout << s << endl;
+    return s;
+}
+int addContants(string s)
+{
+    int len = s.length();
+    int sum = 0;
+    for (int i = 0; i < len; ++i)
+    {
+        char c = s.at(i);
+        // cout << c << endl;
+        int diff = c - '0';
+        if (diff >= 0 && diff <= 9)
+        {
+            sum += diff;
+        }
+    }
+    return sum;
+}
+//called after parse Power
+vector<int> parseCoeff(string s)
+{
+    vector<int> co;
+    // ---------- parse coeff
+    // cout << "s: " << s << endl;
+    int pos = s.find("x");
+    int len = s.length();
+    // cout << "s: " << s << endl;
+    s.replace(pos, 1, "");
+    --len;
+    while (pos > 0 && pos <= len)
+    {
+        --pos;
+        string coeff = "";
+        char c = s.at(pos);
+        // cout << c << endl;
+        int diff = c - '0';
+        int count = 0;
+        while (diff >= 0 && diff <= 9)
+        {
+            ++count;
+            coeff += c;
+            // cout << coeff << endl;
+            s.replace(pos, 1, "");
+            // cout << "s: " << s << endl;
+            --len;
+            --pos;
+            if (pos >= 0)
+            {
+                c = s.at(pos);
+            }
+            else
+            {
+                pos = 0;
+                break;
+            }
+            diff = c - '0';
+            // cout << "s: " << s << endl;
+        }
+        if (count == 0)
+        {
+            coeff = "1";
+        }
+        coeff = reverseString(coeff);
+        stringstream cof(coeff);
+        int x = 0;
+        cof >> x;
+        if (c == '-')
+        {
+            x = x * -1;
+        }
+        co.push_back(x);
+
+        // cout << coeff << endl;
+        coeff = "";
+        // cout << "pos: " << pos << endl;
+        pos = s.find("x", pos);
+        if (pos >= 0)
+        {
+            s.replace(pos, 1, "");
+            --len;
+        }
+        // cout << "pos: " << pos << endl;
+        // cout << "s: " << s << endl;
+    }
+    //coeff will always have one more entry than power due to constants
+    co.push_back(addContants(s));
+    return co;
+}
+map<int, int> parsePower(string s)
+{
+    vector<int> p;
+    // ---------- parse power
+    int pos = s.find("x");
+    int len = s.length();
+    // cout << "s: " << s << endl;
+    // s.replace(pos, 1, "");
+    // --len;
+    while (pos >= 0 && pos < len)
+    {
+        string power = "";
+        //has exponent
+        if (pos + 1 < len && s.at(pos + 1) == '^')
+        {
+            ++pos;
+            s.replace(pos, 1, "");
+            --len;
+            // ++pos;
+            char c = s.at(pos);
+            int diff = c - '0';
+            while (diff >= 0 && diff <= 9)
+            {
+                power += c;
+                s.replace(pos, 1, "");
+                --len;
+                // ++pos;
+                if (pos < len)
+                {
+                    c = s.at(pos);
+                }
+                else
+                {
+                    break;
+                }
+                diff = c - '0';
+                // cout << "s: " << s << endl;
+            }
+        }
+        else
+        {
+            power = "1";
+            ++pos;
+        }
+        stringstream pow(power);
+        int x = 0;
+        pow >> x;
+        p.push_back(x);
+        // cout << power << endl;
+        power = "";
+        pos = s.find("x", pos);
+        // cout << "pos: " << pos << endl;
+        // cout << "s: " << s << endl;
+    }
+    // ---------- done parsing power
+    p.push_back(0);
+    vector<int> co = parseCoeff(s);
+    return makeMap(p,co);
+    // for (int i = 0; i < co.size(); ++i)
+    // {
+    //     cout << co.at(i) << " ";
+    // }
+    // cout << endl;
+}
+
+int main(int argc, char *argvp[])
+{
+    string s = "";
+    getline(cin, s);
+    s = cleanString(s);
+    // cout << s << endl;
+
+    map<int,int> poly = parsePower(s);
+    map<int, int> :: iterator itr;
+    for(itr = poly.begin(); itr != poly.end(); ++itr){
+        cout << "key: " << itr->first << ", value: " << itr->second << endl;
+    }
+}
