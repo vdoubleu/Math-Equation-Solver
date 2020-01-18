@@ -32,7 +32,7 @@ int power(int a, int b){
 
 
 }
-int evaluate(map<int, int> a, double x){
+double evaluate(map<int, int> a, double x){
 	int value = 0;
 	map<int, int> :: iterator itr;
 	for (itr = a.begin(); itr != a.end(); itr++){
@@ -41,12 +41,17 @@ int evaluate(map<int, int> a, double x){
 	return value;
 }
 
+double newton(map<int, int> a, int lower, int upper){
+	double curr = evaluate(a, lower);
+
+
+}
 int main(){
 	map<int, int> first;
-	first.insert(pair<int,int>(1,2));
-	first.insert(pair<int,int>(2,4));
+	first.insert(pair<int, int>(1,2));
+	first.insert(pair<int, int>(2,4));
 	map<int, int> deriv = differentiate(first);
-	map<int,int> :: iterator itr;
+	map<int, int> :: iterator itr;
 	for (itr = deriv.begin(); itr != deriv.end(); itr++){
 		cout << itr -> first << endl;
 		cout << itr -> second << endl;
