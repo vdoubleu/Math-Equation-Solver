@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 using namespace std;
-
+int evaluate(map<int, int> a, double x);
 map<int, int> differentiate(map<int, int> a){
 	map<int, int> deriv;
 	map<int, int> :: iterator itr;
