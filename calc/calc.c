@@ -43,10 +43,20 @@ double evaluate(map<int, int> a, double x){
 	return value;
 }
 
-double newton(map<int, int> a, int lower, int upper){
+double newton(map<int, int> a, double lower){
 	double curr = evaluate(a, lower);
+	double slope = evaluate(differentiate(a), lower);
+	double diff = curr / slope;
+	curr -= diff;
+	return curr;
+}
 
-
+void iterate(map<int, int> a, int lower, int higher){
+	for (int i = lower; i < higher; i++){
+		if (evaluate(a, i)*evaluate(a, i+1) < 0){
+			cout << newton(a, i) << endl;
+		}
+	}
 }
 int main(){
 	map<int, int> first;
@@ -58,7 +68,7 @@ int main(){
 		cout << itr -> first << endl;
 		cout << itr -> second << endl;
 	}
-
+	iterate(first, lowerBound(a), upperBound(a));
 	return 0;
 
 
