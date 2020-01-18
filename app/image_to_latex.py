@@ -14,10 +14,7 @@ app_key = os.getenv('APP_KEY')
 endpoint = "https://api.mathpix.com/v3/latex"
 
 
-def to_wolfram(file_path):
-
-    image_uri = "data:image/jpg;base64," + base64.b64encode(open(file_path, "rb").read()).decode()
-
+def to_wolfram(image_uri):
 
     request_params = {
     "src": image_uri,
@@ -36,6 +33,7 @@ def to_wolfram(file_path):
 
 # test
 if __name__ == "__main__":
-    file_path = '/home/cindyli/Pictures/handwritten-note.jpg'
-    equation = to_wolfram(file_path = os.path.abspath(file_path))
+    file_path = os.path.abspath('/home/cindyli/Pictures/handwritten-note.jpg')
+    img_base64 = "data:image/jpg;base64," + base64.b64encode(open(file_path, "rb").read()).decode()
+    equation = to_wolfram(img_base64)
     print(equation.replace(' ', ''))
