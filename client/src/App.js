@@ -6,17 +6,26 @@ import $ from "jquery";
 
 
 function App() {
+   function httpCall(){
+      var URL = "http://0.0.0.0:80/";
+      var out;
+
+      $.get(URL, {}, function(data){
+         out = data
+      });
+
+     document.getElementById("returnVal").innerHTML = JSON.stringify(out); 
+   }
+
    function uploadFile(){
       var input = document.getElementById("imgInp").files;
       var fileToLoad = input[0];
-      
-      alert(fileToLoad);
       
       var reader = new FileReader();
       reader.readAsBinaryString(fileToLoad);
       
       reader.onload = function() {
-        alert(btoa(reader.result));
+        httpCall(btoa(reader.result));
 
 
        };
@@ -48,10 +57,11 @@ function App() {
         
       
       <button className="button" onClick={uploadFile}>submit</button>
+
+      <p id="returnVal"></p>
+
    </div>
 
-
-   <div id="imgTest"></div>
 
    </Container>
   );
