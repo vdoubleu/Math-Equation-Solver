@@ -1,27 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Container} from 'react-bootstrap';
+import $ from "jquery";
 
 
 function App() {
+   function uploadFile(){
+      var input = document.getElementById("imgInp").files;
+      
+      var fileReader = new FileReader();
+
+      var fileToLoad = input[0];
+
+      fileReader.onload = function(fileLoadedEvent){
+         var srcData = fileLoadedEvent.target.result;
+
+         var newImage = document.createElement("img");
+         newImage.src = srcData;
+
+         document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+   
+
+         alert(document.getElementById("ImgTest").innerHTML);
+      }
+
+      //alert(JSON.stringify(input));   
+   }
+
+   var loadFile = function(event) {
+     var output = document.getElementById("output");
+     output.src = URL.createObjectURL(event.target.files[0]);
+   };
+
   return (
-    <div className="App">
+   <Container className = "App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       Math Equation Solver
       </header>
-    </div>
+   
+
+   <div className="content">
+      <label> input an image of a math equation to solve</label>
+
+      
+         <input type="file" id="imgInp" accept="image/png, image/jpeg" onChange={loadFile}/>
+
+         <img id="output" className="image"/>
+        
+      
+      <button className="button" onClick={uploadFile}>submit</button>
+   </div>
+
+   </Container>
   );
 }
 
