@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container} from 'react-bootstrap';
+import {Container, Card, Button, Image} from 'react-bootstrap';
 import $ from "jquery";
 
 
@@ -41,6 +41,25 @@ function App() {
    };
 
   return (
+<<<<<<< HEAD
+     <Container className = "App">
+         <Card className="text-center" border="dark" padding-to='10rem'>
+            <Card.Header as="h5">Math Equation Solver</Card.Header>
+            <div>
+               <input type="file" 
+                        id="imgInp" 
+                        accept="image/png, image/jpeg" 
+                        onChange={loadFile}/>
+               <div border='light' style={{display: 'flex', justifyContent: 'center'}}>
+                  <Image id="output" className="image"/>
+               </div>
+            </div>
+            <Card.Footer>
+               <Button variant="primary">Solve</Button>
+            </Card.Footer>
+         </Card>
+     </Container>
+=======
    <Container className = "App">
       <header className="App-header">
        Math Equation Solver
@@ -64,6 +83,7 @@ function App() {
 
 
    </Container>
+>>>>>>> bd6085f0abe41e51bc198a123112d43108cfa5ea
   );
 }
 
