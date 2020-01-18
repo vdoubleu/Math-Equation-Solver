@@ -14,10 +14,16 @@ map<int, int> differentiate(map<int, int> a){
 }
 
 int main(){
-	map<int, int> first = { {1,4}, {2,3}  };
+	map<int, int> first;
+	first.insert(pair<int,int>(1,2));
+	first.insert(pair<int,int>(2,4));
 	map<int, int> deriv = differentiate(first);
-
-	cout << deriv.begin()->first << endl;
+	map<int,int> :: iterator itr;
+	for (itr = deriv.begin(); itr != deriv.end(); itr++){
+		cout << itr -> first << endl;
+		cout << itr -> second << endl;
+	}
+	//cout << deriv.begin()->first << endl;
 	return 0;
 
 
