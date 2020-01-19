@@ -41,7 +41,6 @@ function App() {
    };
 
   return (
-<<<<<<< HEAD
      <Container className = "App">
          <Card className="text-center" border="dark" padding-to='10rem'>
             <Card.Header as="h5">Math Equation Solver</Card.Header>
@@ -59,32 +58,7 @@ function App() {
             </Card.Footer>
          </Card>
      </Container>
-=======
-   <Container className = "App">
-      <header className="App-header">
-       Math Equation Solver
-      </header>
-   
-
-   <div className="content">
-      <label> input an image of a math equation to solve</label>
-
-      
-         <input type="file" id="imgInp" accept="image/png, image/jpeg" onChange={loadFile}/>
-
-         <img id="output" className="image"/>
-        
-      
-      <button className="button" onClick={uploadFile}>submit</button>
-
-      <p id="returnVal"></p>
-
-   </div>
-
-
-   </Container>
->>>>>>> bd6085f0abe41e51bc198a123112d43108cfa5ea
-  );
+ );
 }
 
 export default App;
