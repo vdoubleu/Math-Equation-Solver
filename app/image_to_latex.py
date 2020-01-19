@@ -7,14 +7,16 @@ from dotenv import load_dotenv
 
 
 # mathpix credentials 
-load_dotenv()
-app_id = os.getenv('APP_ID')
-app_key = os.getenv('APP_KEY')
+def get_credentials():
+    load_dotenv()
+    endpoint = "https://api.mathpix.com/v3/latex"
+    return os.getenv('APP_ID'), os.getenv('APP_KEY'), endpoint
 
-endpoint = "https://api.mathpix.com/v3/latex"
 
-
+# converts a base64 enocded image to a string in wolfram format
 def to_wolfram(image_uri):
+
+    app_id, app_key, endpoint = get_credentials()
 
     request_params = {
     "src": image_uri,
@@ -29,11 +31,3 @@ def to_wolfram(image_uri):
         headers={"app_id": app_id, "app_key": app_key,
                 "Content-type": "application/json"})
     return json.loads(r.text)["wolfram"]
-
-
-# test
-if __name__ == "__main__":
-    file_path = os.path.abspath('/home/cindyli/Pictures/handwritten-note.jpg')
-    img_base64 = "data:image/jpg;base64," + base64.b64encode(open(file_path, "rb").read()).decode()
-    equation = to_wolfram(img_base64)
-    print(equation.replace(' ', ''))
