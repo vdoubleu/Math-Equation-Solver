@@ -1,48 +1,11 @@
 import React from 'react'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Card, Button, Image} from 'react-bootstrap';
+import {Container, Card, Button, Image, Alert} from 'react-bootstrap';
 import $ from "jquery";
 
-var currTime;
-var startTime;
-var updatedTime;
-var difference;
-var tInterval;
-var savedTime;
-var paused = 0;
-var running = 0;
 
 function App() {
-   function startTimer(){
-      if(!running){
-      startTime = new Date().getTime();
-      tInterval = setInterval(getTime, 1); 
-      paused = 0;
-      running = 1;
-      }
-   }
-
-   function resetTimer(){
-      clearInterval(tInterval);
-      savedTime = 0;
-      difference = 0;
-      paused = 0;
-      running = 0;
-   }
-   
-   function getTime(){
-      updatedTime = new Date().getTime();
-      if (savedTime){
-         difference = (updatedTime - startTime) + savedTime;
-      } else {
-         difference =  updatedTime - startTime;
-      }
-
-      return difference;
-
-   }
-
 
    function httpCall(img_base64){
       var URL = "http://127.0.0.1:5000/imageCalc/";
@@ -54,15 +17,8 @@ function App() {
       
       //alert(out);
       
-      //alert('Please wait patiently while your request is being processed');
-      
-      
-      startTimer();
-      while(getTime() < 500){}
-      resetTimer();   
-   
+      alert('Please wait patiently while your request is being processed');
       document.getElementById("returnVal").innerHTML = out; 
-
    }
 
    function uploadFile(){
@@ -79,7 +35,6 @@ function App() {
        reader.onerror = function() {
         alert('there are some problems');
        };      
-
    }
 
    var loadFile = function(event) {
@@ -89,23 +44,27 @@ function App() {
 
   return (
      <Container className = "App">
-         <Card className="text-center" border="dark">
-            <Card.Header as="h5">Math Equation Solver</Card.Header>
+         <Card className="text-center" border="dark" style={{marginTop: '40px'}}>
+            <Card.Header style={{fontSize: '2rem'}}>Math Equation Solver</Card.Header>
+            <div style={{marginTop: '20px', marginBottom: '10px'}}>
+               Upload a file of a polynomial equation
+            </div>
             <div>
                <input type="file" 
                       id="imgInp" 
                       accept="image/png, image/jpeg" 
+                      style={{marginTop: '20px', marginBottom: '20px'}}
                       onChange={loadFile}/>
-               <div border='light' style={{display: 'flex', justifyContent: 'center'}}>
+               <div border='light' style={{display: 'flex', justifyContent: 'center', marginLeft: '10px', marginRight: '10px'}}>
                   <Image id="output" className="image"/>
                </div>
             </div>
             <Card.Footer>
                <Button variant="primary" onClick={uploadFile}>Solve</Button>
             </Card.Footer>
-            <Card className="answer" border="dark">
+         </Card>
+         <Card className='answer' border="dark" style={{marginTop: '20px', fontSize: '1.5rem'}}>
                <Card.Text id="returnVal"></Card.Text>
-            </Card>
          </Card>
      </Container>
  );

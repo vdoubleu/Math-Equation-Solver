@@ -31,7 +31,7 @@ def to_wolfram(image_base64):
         data=json.dumps(request_params),
         headers={"app_id": app_id, "app_key": app_key,
                 "Content-type": "application/json"})
-    return json.loads(r.text)["wolfram"]
+    return json.loads(r.text)["wolfram"].replace(' ', '')
 
 if __name__ == "__main__":
     file_path = os.path.abspath('/home/cindyli/Pictures/math.jpg')
