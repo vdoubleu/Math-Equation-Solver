@@ -4,46 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Card, Button, Image} from 'react-bootstrap';
 import $ from "jquery";
 
-var currTime;
-var startTime;
-var updatedTime;
-var difference;
-var tInterval;
-var savedTime;
-var paused = 0;
-var running = 0;
-
 function App() {
-   function startTimer(){
-      if(!running){
-      startTime = new Date().getTime();
-      tInterval = setInterval(getTime, 1); 
-      paused = 0;
-      running = 1;
-      }
-   }
-
-   function resetTimer(){
-      clearInterval(tInterval);
-      savedTime = 0;
-      difference = 0;
-      paused = 0;
-      running = 0;
-   }
-   
-   function getTime(){
-      updatedTime = new Date().getTime();
-      if (savedTime){
-         difference = (updatedTime - startTime) + savedTime;
-      } else {
-         difference =  updatedTime - startTime;
-      }
-
-      return difference;
-
-   }
-
-
    function httpCall(img_base64){
       var URL = "http://127.0.0.1:5000/imageCalc/";
       var out;
@@ -52,15 +13,9 @@ function App() {
          out = data
       });
       
-      //alert(out);
-      
-      //alert('Please wait patiently while your request is being processed');
-      
-      
-      startTimer();
-      while(getTime() < 500){}
-      resetTimer();   
-   
+      alert(out);
+
+      alert('Please wait patiently while your request is being processed');
       document.getElementById("returnVal").innerHTML = out; 
 
    }
