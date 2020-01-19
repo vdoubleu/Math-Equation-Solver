@@ -3,6 +3,9 @@
 #include <map>
 #include <iostream>
 #include <sstream>
+
+#include "amalgamate/crow_all.h"
+
 using namespace std;
 
 string reverseString(string s)
@@ -208,14 +211,34 @@ map<int, int> parsePower(string s)
 
 int main(int argc, char *argvp[])
 {
+    crow::SimpleApp app;
+
+
     string s = "";
-    getline(cin, s);
+    //getline(cin, s);
+    string out;
+
+
+    CROW_ROUTE(app, "/calc/")
+    ([](const crow::request& req){
+      auto x = crow::json::load(req.body);
+      if(!x)
+         return crow::response(400);
+
     s = cleanString(s);
     // cout << s << endl;
 
     map<int,int> poly = parsePower(s);
     map<int, int> :: iterator itr;
     for(itr = poly.begin(); itr != poly.end(); ++itr){
-        cout << "key: " << itr->first << ", value: " << itr->second << endl;
+        out =  "key: " + itr->first + ", value: " + itr->second << endl;
     }
+
+    std::ostringstream os;
+
+   os << out;
+   return crow::response{os.str()};
+   });
+
+   app.port(7000).multithreaded().run();
 }
