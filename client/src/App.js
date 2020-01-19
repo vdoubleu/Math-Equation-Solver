@@ -10,13 +10,23 @@ function App() {
    function httpCall(img_base64){
       var URL = "http://127.0.0.1:5000/imageCalc/";
       var out;
+      var result;
 
       $.post(URL, {'image_path': img_base64}, function(data){
          out = data
       });
       
       alert('Processing request');
-      document.getElementById("returnVal").innerHTML = out; 
+
+      var URL2 = "http://0.0.0.0:7000/calc/";
+
+      $.get(URL2, {"data": out}, function(data){
+         result = data
+      });
+
+      alert("More data processing");
+
+      document.getElementById("returnVal").innerHTML = result; 
    }
 
    function uploadFile(){
