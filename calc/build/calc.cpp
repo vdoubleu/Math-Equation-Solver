@@ -1,9 +1,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-
-#include "amalgamate/crow_all.h"
-
 //Testing to see if Max can push
 //test 2
 using namespace std;
@@ -70,42 +67,27 @@ double newton(map<int, int> a, double lower){
 	return lower;
 }
 
-string iterate(map<int, int> a, int lower, int higher){
-	string out = "";
-   for (int i = lower; i < higher; i++){
+void iterate(map<int, int> a, int lower, int higher){
+	for (int i = lower; i < higher; i++){
 		if (evaluate(a, i)*evaluate(a, i+1) <= 0){
-			out += newton(a, i) +"\n";
-         //cout << newton(a, i) << endl;
-         i++;
+			cout << newton(a, i) << endl;
+      i++;
 		}
 	}
 }
-
 int main(){
-
-   crow::SimpleApp app;
-
 	map<int, int> first;
 	first.insert(pair<int, int>(1,5));
 	first.insert(pair<int, int>(2,1));
 	map<int, int> deriv = differentiate(first);
 	map<int, int> :: iterator itr;
-   string s = "";
 	for (itr = deriv.begin(); itr != deriv.end(); itr++){
-		//cout << itr -> first << endl;
-		//cout << itr -> second << endl;
+		cout << itr -> first << endl;
+		cout << itr -> second << endl;
 	}
-   //cout << lowerBound(first) << endl << upperBound(first) << endl;
-	
-   CROW_ROUTE(app, "/")
-   ([]{
-      return iterate(first, lowerBound(first), upperBound(first));
-   });
-
-   app.port(8080).run();
-	
-
-   return 0;
+  cout << lowerBound(first) << endl << upperBound(first) << endl;
+	iterate(first, lowerBound(first), upperBound(first));
+	return 0;
 
 
 }
