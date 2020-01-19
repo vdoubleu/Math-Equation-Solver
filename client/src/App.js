@@ -7,12 +7,13 @@ import $ from "jquery";
 
 function App() {
    function httpCall(){
-      var URL = "http://0.0.0.0:80/";
+      var URL = "http://127.0.0.1:5000/hello";
       var out;
 
       $.get(URL, {}, function(data){
          out = data
       });
+
 
      document.getElementById("returnVal").innerHTML = JSON.stringify(out); 
    }
@@ -40,10 +41,13 @@ function App() {
      output.src = URL.createObjectURL(event.target.files[0]);
    };
 
+   var solve = function(event) {
+
+   };
+
   return (
-<<<<<<< HEAD
      <Container className = "App">
-         <Card className="text-center" border="dark" padding-to='10rem'>
+         <Card className="text-center" border="dark">
             <Card.Header as="h5">Math Equation Solver</Card.Header>
             <div>
                <input type="file" 
@@ -55,35 +59,13 @@ function App() {
                </div>
             </div>
             <Card.Footer>
-               <Button variant="primary">Solve</Button>
+               <Button variant="primary" onClick={uploadFile}>Solve</Button>
             </Card.Footer>
+            <Card className="answer" border="dark">
+               <Card.Text id="returnVal"></Card.Text>
+            </Card>
          </Card>
      </Container>
-=======
-   <Container className = "App">
-      <header className="App-header">
-       Math Equation Solver
-      </header>
-   
-
-   <div className="content">
-      <label> input an image of a math equation to solve</label>
-
-      
-         <input type="file" id="imgInp" accept="image/png, image/jpeg" onChange={loadFile}/>
-
-         <img id="output" className="image"/>
-        
-      
-      <button className="button" onClick={uploadFile}>submit</button>
-
-      <p id="returnVal"></p>
-
-   </div>
-
-
-   </Container>
->>>>>>> bd6085f0abe41e51bc198a123112d43108cfa5ea
   );
 }
 
