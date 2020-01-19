@@ -7,7 +7,79 @@
 #include "amalgamate/crow_all.h"
 
 using namespace std;
+double evaluate(map<int, int> a, double x);
+map<int, int> differentiate(map<int, int> a){
+	map<int, int> deriv;
+	map<int, int> :: iterator itr;
+	for (itr = a.begin(); itr != a.end(); itr++){
+		deriv.insert(pair<int, int>((itr->first)-1,(itr->first)*(itr->second)));
+	}
+	return deriv;
+}
+int lowerBound(map<int, int> a){
+	int test = -10;
+	while (evaluate(a, test) * evaluate(a, test*10) < 0){
+		test = test * 10;
+	}
+	return test;
+}
+int upperBound(map<int, int> a){
+	int test = 10;
+	while (evaluate(a, test) * evaluate(a, test) < 0){
+		test = test * 10;
+	}
+	return test;
+}
+int power(int a, int b){
+	if (b == 0) return 1;
+	if (b == 1) return a;
+	else return  a * power(a, b-1);
 
+
+}
+double evaluate(map<int, int> a, double x){
+	int value = 0;
+	map<int, int> :: iterator itr;
+	for (itr = a.begin(); itr != a.end(); itr++){
+		value += (itr->second)*(power(x, itr->first));
+	}
+	return value;
+}
+
+double newton(map<int, int> a, double lower){
+	double slope = evaluate(differentiate(a), lower);
+  double temp = evaluate(a, lower);
+	double diff = temp / slope;
+	lower -= diff;
+   slope = evaluate(differentiate(a), lower);
+    temp = evaluate(a, lower);
+     diff = temp / slope;
+     lower -= diff;
+     slope = evaluate(differentiate(a), lower);
+    temp = evaluate(a, lower);
+     diff = temp / slope;
+     lower -= diff;
+     slope = evaluate(differentiate(a), lower);
+    temp = evaluate(a, lower);
+     diff = temp / slope;
+     lower -= diff;
+     slope = evaluate(differentiate(a), lower);
+    temp = evaluate(a, lower);
+     diff = temp / slope;
+     lower -= diff;
+	return lower;
+}
+
+string iterate(map<int, int> a, int lower, int higher){
+   string s = "";
+	for (int i = lower; i < higher; i++){
+		if (evaluate(a, i)*evaluate(a, i+1) <= 0){
+			s+=to_string( newton(a, i))+ " ";
+         i++;
+		}
+	}
+   return s;
+}
 string reverseString(string s)
 {
     int len = s.length();
@@ -242,9 +314,7 @@ int main(int argc, char *argvp[])
     crow::SimpleApp app;
 
 
-    string s = "";
     //getline(cin, s);
-    string out;
 
 
     CROW_ROUTE(app, "/calc/")
@@ -253,16 +323,25 @@ int main(int argc, char *argvp[])
       if(!x)
          return crow::response(400);
 
+    string out;
+    string s = "";
     s = cleanString(s);
     // cout << s << endl;
-
+   
     map<int,int> poly = parsePower(s);
     map<int, int> :: iterator itr;
-    for(itr = poly.begin(); itr != poly.end(); ++itr){
-        out =  "key: " + itr->first + ", value: " + itr->second << endl;
-    }
-
-    std::ostringstream os;
+   // for(itr = poly.begin(); itr != poly.end(); ++itr){
+     //   out =  "key: " + itr->first + ", value: " + itr->second << endl;
+   // }
+   map<int, int> deriv = differentiate(poly);
+  // map<int, int> :: iterator itr;
+//   for (itr = deriv.begin(); itr != deriv.end(); itr++){
+  //    cout << itr -> first << endl;
+    //  cout << itr -> second << endl;
+  // }
+  // cout << lowerBound(poly) << endl << upperBound(poly) << endl;
+   out =  iterate(poly, lowerBound(poly), upperBound(poly));
+   std::ostringstream os;
 
    os << out;
    return crow::response{os.str()};
