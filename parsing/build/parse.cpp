@@ -324,7 +324,7 @@ int main(int argc, char *argvp[])
          return crow::response(400);
 
     string out;
-    string s = x["data"].i();
+    string s = x["data"].s();
     s = cleanString(s);
     // cout << s << endl;
    
