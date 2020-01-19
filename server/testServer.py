@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, after_this_request
 
 app = Flask(__name__)
 
-@app.route('/hello', methods=['GET'])
+@app.route('/hello/', methods=['POST'])
 def hello_world():
    @after_this_request
    def add_header(response):

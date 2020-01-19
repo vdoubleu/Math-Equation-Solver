@@ -3,13 +3,14 @@ from image_to_latex import to_wolfram
 
 app = Flask(__name__)
 
-@app.route('/<image_path>', methods=['GET'])
-def hello_world(image_path):
+@app.route('/imageCalc/', methods=['POST'])
+def hello_world():
    @after_this_request
    def add_header(response):
       response.headers.add('Access-Control-Allow-Origin', '*')
       return response
 
+   image_path = request.form['image_path']
    jsonResp = to_wolfram(image_path)
    return jsonResp
 
