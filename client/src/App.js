@@ -10,12 +10,13 @@ function App() {
       var URL = "http://127.0.0.1:5000/hello";
       var out;
 
-      $.get(URL, {}, function(data){
+      $.post(URL, {"hi":123}, function(data){
          out = data
       });
+      
+      alert(out);
 
-
-     document.getElementById("returnVal").innerHTML = JSON.stringify(out); 
+      document.getElementById("returnVal").innerHTML = JSON.stringify(out); 
    }
 
    function uploadFile(){
