@@ -15,9 +15,7 @@ function App() {
          out = data
       });
       
-      //alert(out);
-      
-      alert('Please wait patiently while your request is being processed');
+      alert('Processing request');
       document.getElementById("returnVal").innerHTML = out; 
    }
 
