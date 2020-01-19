@@ -19,7 +19,22 @@ string reverseString(string s)
 map<int, int> makeMap(vector<int> pow, vector<int> co)
 {
     int len = pow.size();
+    int len2 = co.size();
     map<int, int> poly;
+
+    // cout << "testing, pow size: " << len << " coeff size: " << len2 << endl;
+
+    // for (int i = 0; i < len; ++i)
+    // {
+    //     cout << pow.at(i) << " ";
+    // }
+    // cout << endl;
+    // for (int i = 0; i < co.size(); ++i)
+    // {
+    //     cout << co.at(i) << " ";
+    // }
+    // cout << endl;
+
     if (len != co.size())
     {
         cerr << "Sizes of vectors pow and co are different, pow: " << pow.size() << ", co: " << co.size() << endl;
@@ -28,9 +43,12 @@ map<int, int> makeMap(vector<int> pow, vector<int> co)
     {
         int p = pow.at(i);
         int c = co.at(i);
-        if(poly.find(p) != poly.end()){
+        if (poly.find(p) != poly.end())
+        {
             poly[p] += c;
-        }else{
+        }
+        else
+        {
             poly[p] = c;
         }
     }
@@ -76,44 +94,54 @@ vector<int> parseCoeff(string s)
 {
     vector<int> co;
     // ---------- parse coeff
+    // cout << "running parsecoeff";
     // cout << "s: " << s << endl;
     int pos = s.find("x");
     int len = s.length();
-    // cout << "s: " << s << endl;
+    // cout << "pos: " << pos << endl;
     s.replace(pos, 1, "");
     --len;
-    while (pos > 0 && pos <= len)
+    while (pos >= 0 && pos <= len)
     {
         --pos;
         string coeff = "";
-        char c = s.at(pos);
-        // cout << c << endl;
-        int diff = c - '0';
-        int count = 0;
-        while (diff >= 0 && diff <= 9)
+        char c;
+        if (pos >= 0)
         {
-            ++count;
-            coeff += c;
-            // cout << coeff << endl;
-            s.replace(pos, 1, "");
-            // cout << "s: " << s << endl;
-            --len;
-            --pos;
-            if (pos >= 0)
+            c = s.at(pos);
+            // cout << "pos: " << pos << endl;
+            int diff = c - '0';
+            int count = 0;
+            while (diff >= 0 && diff <= 9)
             {
-                c = s.at(pos);
+                ++count;
+                coeff += c;
+                // cout << coeff << endl;
+                s.replace(pos, 1, "");
+                // cout << "s: " << s << endl;
+                --len;
+                --pos;
+                if (pos >= 0)
+                {
+                    c = s.at(pos);
+                }
+                else
+                {
+                    pos = 0;
+                    break;
+                }
+                diff = c - '0';
+                // cout << "s: " << s << endl;
             }
-            else
+            if (count == 0)
             {
-                pos = 0;
-                break;
+                coeff = "1";
             }
-            diff = c - '0';
-            // cout << "s: " << s << endl;
         }
-        if (count == 0)
+        else
         {
             coeff = "1";
+            pos=0;
         }
         coeff = reverseString(coeff);
         stringstream cof(coeff);
@@ -198,7 +226,7 @@ map<int, int> parsePower(string s)
     // ---------- done parsing power
     p.push_back(0);
     vector<int> co = parseCoeff(s);
-    return makeMap(p,co);
+    return makeMap(p, co);
     // for (int i = 0; i < co.size(); ++i)
     // {
     //     cout << co.at(i) << " ";
@@ -213,9 +241,10 @@ int main(int argc, char *argvp[])
     s = cleanString(s);
     // cout << s << endl;
 
-    map<int,int> poly = parsePower(s);
-    map<int, int> :: iterator itr;
-    for(itr = poly.begin(); itr != poly.end(); ++itr){
+    map<int, int> poly = parsePower(s);
+    map<int, int>::iterator itr;
+    for (itr = poly.begin(); itr != poly.end(); ++itr)
+    {
         cout << "key: " << itr->first << ", value: " << itr->second << endl;
     }
 }
