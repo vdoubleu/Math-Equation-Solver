@@ -14,6 +14,8 @@ def hello_world():
    image_path = request.form['image_path']
    wolfram_string = to_wolfram(image_path)
    solutions = solve(wolfram_string)
+   if len(solutions) == 0:
+      solutions = 'No solutions'
    return solutions
 
 if __name__ == '__main__':

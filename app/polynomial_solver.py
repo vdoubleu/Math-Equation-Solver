@@ -35,7 +35,7 @@ def newton(polynomial, lower):
         temp = evaluate(polynomial, lower)
         diff = temp / slope
         lower -= diff
-    return lower
+    return round(lower, 5)
 
 
 def find_roots(polynomial, lower, higher):
@@ -53,10 +53,10 @@ def find_roots(polynomial, lower, higher):
 def solve(s):
     s = clean_string(s)
     polynomial = parse_exponents(s)
-    return str(find_roots(polynomial, lower_bound(polynomial), upper_bound(polynomial)))
+    return str(find_roots(polynomial, lower_bound(polynomial), upper_bound(polynomial))).strip('[').strip(']')
 
 
 if __name__ == '__main__':
 
-    s = '-x^2+1'
+    s = '-x^2+2'
     print(solve(s))
