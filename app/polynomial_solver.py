@@ -47,21 +47,16 @@ def find_roots(polynomial, lower, higher):
         if evaluate(polynomial, i) * evaluate(polynomial, i+step) <= 0:
             roots.add(newton(polynomial, i))
         i += step
-    return list(roots)
+    return list(sorted(roots))
 
 
 if __name__ == '__main__':
 
-    s = 'x^2-1'
-    s = clean_string(s)
+    s = '-x^2-1'
     print(s)
+    s = clean_string(s)
 
     polynomial = parse_exponents(s)
-    print(polynomial)
-
-    derivative = differentiate(polynomial)
-
-    print(derivative)
 
     print('Lower bound:', lower_bound(polynomial))
     print('Upper bound:', upper_bound(polynomial))

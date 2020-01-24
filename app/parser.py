@@ -34,6 +34,12 @@ def add_constants(s):
         if 0 <= diff <= 9:
             sum += diff*multiplier
             multiplier *= 10
+    for i in range(1, len(s)):
+        c = s[i]
+        diff = ord(c) - ord('0')
+        if 0 <= diff <= 9 and s[i-1] == '-':
+            sum *= -1
+            break
     return sum
 
 
@@ -62,7 +68,7 @@ def parse_coeff(s):
                     pos = 0
                     break
                 diff = ord(c) - ord('0')
-        
+            
             if count == 0:
                 coeff = '1'
         
@@ -71,7 +77,7 @@ def parse_coeff(s):
             pos = 0
         
         coeff = coeff[::-1]
-
+        
         x = int(coeff)
         if c == '-':
             x *= -1
