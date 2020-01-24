@@ -18,14 +18,6 @@ function App() {
       
       alert('Processing request');
 
-      var URL2 = "http://0.0.0.0:7000/calc/";
-
-      $.get(URL2, {"data": out}, function(data){
-         result = data
-      });
-
-      alert("More data processing");
-
       document.getElementById("returnVal").innerHTML = result; 
    }
 
