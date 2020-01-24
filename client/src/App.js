@@ -16,12 +16,7 @@ function App() {
       });
       
       alert('Processing request');
-<<<<<<< HEAD
       document.getElementById("returnVal").innerHTML = out; 
-=======
-
-      document.getElementById("returnVal").innerHTML = result; 
->>>>>>> 51f2b333f586c01d659b14d10de6bf85c8139a6b
    }
 
    function uploadFile(){
