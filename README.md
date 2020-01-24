@@ -11,3 +11,6 @@ Packages we used include:
  - nodemon
  - bootstrap
  - jquery
+
+
+![appearance](https://raw.githubusercontent.com/vdoubleu/Math-Equation-Solver/master/images/math_equation_solver.png)
