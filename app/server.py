@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, after_this_request
 from image_to_latex import to_wolfram
+from polynomial_solver import solve
 
 app = Flask(__name__)
 
@@ -11,8 +12,9 @@ def hello_world():
       return response
 
    image_path = request.form['image_path']
-   jsonResp = to_wolfram(image_path)
-   return jsonResp
+   wolfram_string = to_wolfram(image_path)
+   solutions = solve(wolfram_string)
+   return solutions
 
 if __name__ == '__main__':
    app.run()

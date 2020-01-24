@@ -50,14 +50,13 @@ def find_roots(polynomial, lower, higher):
     return list(sorted(roots))
 
 
+def solve(s):
+    s = clean_string(s)
+    polynomial = parse_exponents(s)
+    return str(find_roots(polynomial, lower_bound(polynomial), upper_bound(polynomial)))
+
+
 if __name__ == '__main__':
 
-    s = '-x^2-1'
-    print(s)
-    s = clean_string(s)
-
-    polynomial = parse_exponents(s)
-
-    print('Lower bound:', lower_bound(polynomial))
-    print('Upper bound:', upper_bound(polynomial))
-    print('Roots:', find_roots(polynomial, lower_bound(polynomial), upper_bound(polynomial)))
+    s = '-x^2+1'
+    print(solve(s))
