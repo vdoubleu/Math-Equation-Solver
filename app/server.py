@@ -5,7 +5,7 @@ from polynomial_solver import solve
 app = Flask(__name__)
 
 @app.route('/imageCalc/', methods=['POST'])
-def hello_world():
+def solve_polynomial():
    @after_this_request
    def add_header(response):
       response.headers.add('Access-Control-Allow-Origin', '*')
